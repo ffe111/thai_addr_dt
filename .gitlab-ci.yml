@@ -1,0 +1,10 @@
+variables:
+  SVC_NAME: poc-address-detection-service
+  DOMAIN: mod-om
+  PYTHON_VERSION: 3.11-slim
+  UNIT_TEST_ENDBLED: "false"
+
+include:
+  - project: 'nokchen-myorder/dev-portal/ci-template'
+    ref: 'master'
+    file: 'fastapi-template.yml'

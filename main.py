@@ -29,7 +29,7 @@ class Text(BaseModel):
     text: str
 
 
-@app.get("/")
+@app.get("/addr-detect")
 def read_root() -> Union[str, int]:
     try:
         return "Welcome to address-check API\nUse path /address-check to check address\nUse path /docs to see API documentation\nUse path /redoc to see API documentation\n"
@@ -47,7 +47,7 @@ def read_root() -> Union[str, int]:
 #     return {"item_name": item.name, "item_id": item_id}
 
 
-@app.post("/address-check")
+@app.post("/addr-detect/address-check")
 def address_check(text: Text) -> dict:
     try:
         text = text.text
