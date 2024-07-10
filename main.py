@@ -68,7 +68,7 @@ def address_check(text: Text) -> dict:
 if __name__ == '__main__':
     import uvicorn
     try:
-        uvicorn.run(app, host='0.0.0.0', port=8000, log_level="info")
+        uvicorn.run(app, host='0.0.0.0', port=8080, log_level="info")
     except KeyboardInterrupt:
         print("Shutdown server by user")
         logger.error(f"Shutdown server by user")
