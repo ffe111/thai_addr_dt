@@ -1,6 +1,6 @@
 from typing import Union
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
 from thaiAddressTag.tag import *
@@ -13,6 +13,8 @@ import logging
 custom_tokenize, checker = initial_nlp_tools(hashmap)
 
 app = FastAPI()
+
+addr_router = APIRouter(prefix="/addr-detect")
 
 # Set up logging
 logging.basicConfig(level=logging.ERROR)
@@ -29,7 +31,7 @@ class Text(BaseModel):
     text: str
 
 
-@app.get("/addr-detect")
+@addr_router.get("/addr-detect")
 def read_root() -> Union[str, int]:
     try:
         return "Welcome to address-check API\nUse path /address-check to check address\nUse path /docs to see API documentation\nUse path /redoc to see API documentation\n"
@@ -37,17 +39,17 @@ def read_root() -> Union[str, int]:
         logger.error(f"Error in address_check endpoint: {e}")
         raise e
 
-# @app.get("/items/{item_id}")
+# @addr_router.get("/items/{item_id}")
 # def read_item(item_id: int, q: str = None) -> dict:
 #     return {"item_id": item_id, "q": q}
 
 
-# @app.put("/items/{item_id}")
+# @addr_router.put("/items/{item_id}")
 # def update_item(item_id: int, item: Item):
 #     return {"item_name": item.name, "item_id": item_id}
 
 
-@app.post("/addr-detect/address-check")
+@addr_router.post("/addr-detect/address-check")
 def address_check(text: Text) -> dict:
     try:
         text = text.text
@@ -58,12 +60,14 @@ def address_check(text: Text) -> dict:
         logger.error(f"Error in address_check endpoint: {e}")
         raise e
 
-# @app.post("/address-parser")
+# @addr_router.post("/address-parser")
 # def address_parser(text: Text) -> dict:
 #     text = text.text
 #     res = thaiaddress.parse(text)
 #     return {"address": res}
 
+
+app.include_router(addr_router)
 
 if __name__ == '__main__':
     import uvicorn
