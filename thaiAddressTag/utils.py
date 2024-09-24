@@ -59,6 +59,7 @@ def clean_location_text(text: str) -> str:
     text = text.replace("กทม", "กรุงเทพมหานคร")
     text = text.replace("กรุงเทพฯ", "กรุงเทพมหานคร")
     text = text.replace("กรุงเทพมหานคร", "กรุงเทพมหานคร")
+    text = text.replace("รหัสไปรษณีย์", "")
     # text = text.replace(".", "")
     return text
 

@@ -3,14 +3,18 @@ from typing import Union
 from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
+from simpletransformers.ner import NERModel
+import torch
+
 from thaiAddressTag.tag import *
-from thaiAddressTag.hashmaps import hashmap
-from thaiAddressTag.addresses import address_list
 
 # import thaiaddress
 import logging
 
-custom_tokenize, checker = initial_nlp_tools(hashmap)
+# Import NER Model
+PATH = "thaiAddressTag/models"
+MODEL = NERModel("camembert", model_name=PATH,
+                 use_cuda=torch.cuda.is_available())
 
 app = FastAPI()
 
@@ -53,8 +57,7 @@ def read_root() -> Union[str, int]:
 def address_check(text: Text) -> dict:
     try:
         text = text.text
-        res = extract_address(text, custom_tokenize=custom_tokenize,
-                              checker=checker, address_list=address_list)
+        res = extract_address(text=text, model=MODEL)
         return {"text": text, "address": res}
     except Exception as e:
         logger.error(f"Error in address_check endpoint: {e}")
