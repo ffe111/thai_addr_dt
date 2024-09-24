@@ -63,22 +63,6 @@ def clean_location_text(text: str) -> str:
     return text
 
 
-def extract_name(text: str) -> str:
-    """
-    Extracts name from the text.
-    update
-     - คำว่า คุณ
-     - คำนำหน้า เว้น ชื่อ
-    """
-    name = re.search(
-        r'(เด็กชาย|เด็กหญิง|ด\.ช\.|ด\.ญ\.|นาย|นาง|นางสาว|น\.ส\.|ดร\.|คุณ)\s*([ก-๙]+)\s*([ก-๙]+)', text)
-    if name:
-        full_name = name.group(0)
-        text = text.replace(full_name, " ")
-        return text, full_name
-    return text, ''
-
-
 def extract_phone_(text: str) -> (str, list):
     """
     Extracts phone number from the text and standardizes it.
