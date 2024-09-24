@@ -1,10 +1,12 @@
 import re
+from pythainlp.util import normalize
+
 
 def preprocess(text: str) -> str:
     """
     Generalized function to preprocess an input
     """
-    text = text.strip()
+    text = normalize(text).strip()
     text = text.replace("ส่ง ", "")
     text = text.replace("จัดส่ง", "")
     text = text.replace("ชือ.", "")
@@ -19,6 +21,7 @@ def preprocess(text: str) -> str:
     text = text.replace("โทรศัพท์", " ")
     text = text.replace("โทร.", " ")
     text = text.replace("โทร", " ")
+    text = text.replace("ติดต่อ", " ")
     text = text.replace("\n-", " ")
     text = text.replace("\n", " ")
     text = text.replace(": ", " ")
@@ -27,8 +30,10 @@ def preprocess(text: str) -> str:
     text = text.replace("(", "")
     text = text.replace(")", "")
     text = text.replace('"', "")
+
     # text = remove_emoji(text)
     text = " ".join([t for t in text.strip().split(" ") if t.strip() != ""])
+    print(text)
     return text
 
 
@@ -55,6 +60,7 @@ def clean_location_text(text: str) -> str:
     text = text.replace(".", "")
     return text
 
+
 def extract_name(text: str) -> str:
     """
     Extracts name from the text.
@@ -62,7 +68,8 @@ def extract_name(text: str) -> str:
      - คำว่า คุณ
      - คำนำหน้า เว้น ชื่อ
     """
-    name = re.search(r'(เด็กชาย|เด็กหญิง|ด\.ช\.|ด\.ญ\.|นาย|นาง|นางสาว|น\.ส\.|ดร\.|คุณ)\s*([ก-๙]+)\s*([ก-๙]+)', text)
+    name = re.search(
+        r'(เด็กชาย|เด็กหญิง|ด\.ช\.|ด\.ญ\.|นาย|นาง|นางสาว|น\.ส\.|ดร\.|คุณ)\s*([ก-๙]+)\s*([ก-๙]+)', text)
     if name:
         full_name = name.group(0)
         text = text.replace(full_name, " ")
@@ -78,11 +85,13 @@ def extract_phone(text: str):
      - เบอร์ 08 เว้น \dเลขเบอร์
      - เบอร์มี - .
     """
-    phone_match = re.search(r'(\+66\s?|0)([2-9]\d[\s-]?\d{3}[\s-]?\d{4})', text)
+    phone_match = re.search(
+        r'(\+66\s?|0)([2-9]\d[\s-]?\d{3}[\s-]?\d{4})', text)
     if phone_match:
         phone = phone_match.group(0)
         # Standardize phone number
-        phone_standardized = phone.replace(' ', '').replace('-', '').replace('.', '')
+        phone_standardized = phone.replace(
+            ' ', '').replace('-', '').replace('.', '')
         if phone_standardized.startswith('+66'):
             phone_standardized = '0' + phone_standardized[3:]
         text = text.replace(phone_match.group(0), " ")
