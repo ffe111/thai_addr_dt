@@ -1,14 +1,14 @@
-from simpletransformers.ner import NERModel
-import torch
+# from simpletransformers.ner import NERModel
+# import torch
 
-text = "อนงค์ลักษณ์\n9/56 ม.3\nหมู่บ้านนฤมลศิริ(ซอย2)\nซ.บุญศิริ ถ.สุขุมวิท\nต.บางเมือง\nอ.เมืองสมุทรปราการ\nจ.สมุทรปราการ\n10270\nโทร.0956029655"
-path = "models"
+# text = "อนงค์ลักษณ์\n9/56 ม.3\nหมู่บ้านนฤมลศิริ(ซอย2)\nซ.บุญศิริ ถ.สุขุมวิท\nต.บางเมือง\nอ.เมืองสมุทรปราการ\nจ.สมุทรปราการ\n10270\nโทร.0956029655"
+# path = "models"
 
-model = NERModel("camembert", model_name=path,
-                 use_cuda=torch.cuda.is_available())
-predict, _ = model.predict([text])
+# model = NERModel("camembert", model_name=path,
+#                  use_cuda=torch.cuda.is_available())
+# predict, _ = model.predict([text])
 
-print(predict)
+# print(predict)
 
 
 def ner_extract(predict):
@@ -112,8 +112,3 @@ def ner_extract(predict):
         phone.append(current_phone)
 
     return name, org, subdistrict, district, province, zipcode, phone
-
-
-name, org, subdistrict, district, province, zipcode, phone = ner_extract(
-    predict)
-print(name, org, subdistrict, district, province, zipcode, phone)
