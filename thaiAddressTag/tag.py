@@ -1,5 +1,5 @@
-from simpletransformers.ner import NERModel
-import torch
+# from simpletransformers.ner import NERModel
+# import torch
 from thaiAddressTag.addresses import *
 from thaiAddressTag.ner import *
 from thaiAddressTag.utils import *
