@@ -1,0 +1,53 @@
+{
+  "_name_or_path": "airesearch/wangchanberta-base-att-spm-uncased",
+  "architectures": [
+    "CamembertForTokenClassification"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": 0,
+  "classifier_dropout": null,
+  "eos_token_id": 2,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "O",
+    "1": "B-ORG",
+    "2": "B-NAME",
+    "3": "I-NAME",
+    "4": "B-PROV",
+    "5": "B-DIS",
+    "6": "B-SUB",
+    "7": "B-ZIP",
+    "8": "B-PHONE",
+    "9": "B-EMAIL"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "label2id": {
+    "B-DIS": 5,
+    "B-EMAIL": 9,
+    "B-NAME": 2,
+    "B-ORG": 1,
+    "B-PHONE": 8,
+    "B-PROV": 4,
+    "B-SUB": 6,
+    "B-ZIP": 7,
+    "I-NAME": 3,
+    "O": 0
+  },
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "camembert",
+  "num_attention_head": 12,
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 1,
+  "position_embedding_type": "absolute",
+  "torch_dtype": "float32",
+  "transformers_version": "4.44.2",
+  "type_vocab_size": 1,
+  "use_cache": true,
+  "vocab_size": 25005
+}
