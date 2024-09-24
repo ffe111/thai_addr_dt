@@ -79,23 +79,32 @@ def extract_name(text: str) -> str:
     return text, ''
 
 
-def extract_phone(text: str):
+def extract_phone_(text: str) -> (str, list):
     """
-    Extracts phone from the text.
-    update
-     - เบอร์ +66
-     - เบอร์ 08 เว้น \dเลขเบอร์
-     - เบอร์มี - .
+    Extracts phone number from the text and standardizes it.
+    1. Replace country code like +XX with 0.
+    2. Remove dash (-) and spaces within phone numbers only.
+    3. Remove the phone number from the text.
+    Returns the cleaned text and a list of extracted phone numbers.
     """
-    phone_match = re.search(
-        r'(\+66\s?|0)([2-9]\d[\s-]?\d{3}[\s-]?\d{4})', text)
-    if phone_match:
-        phone = phone_match.group(0)
-        # Standardize phone number
-        phone_standardized = phone.replace(
-            ' ', '').replace('-', '').replace('.', '')
-        if phone_standardized.startswith('+66'):
-            phone_standardized = '0' + phone_standardized[3:]
-        text = text.replace(phone_match.group(0), " ")
-        return text.strip(), phone_standardized
-    return text.strip(), ''
+    # Remove parentheses around phone numbers
+    text = text.replace('(', '').replace(')', '').replace('-', ' ')
+
+    # Replace country code like +XX with 0
+    text = re.sub(r'\+\d{2}', '0', text)
+
+    # List to store extracted phone numbers
+    phone_numbers = []
+
+    # Function to clean and store phone numbers
+    def clean_phone(match):
+        phone_number = match.group(0)
+        # Remove dash (-) and spaces within the phone number
+        phone_number = re.sub(r'[\s-]', '', phone_number)
+        phone_numbers.append(phone_number)
+        return ''  # Remove the phone number from the text
+
+    # Improved regex to capture different phone number formats
+    cleaned_text = re.sub(r'\b(0[\d\s-]{7,12})\b', clean_phone, text)
+
+    return cleaned_text, phone_numbers
