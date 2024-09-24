@@ -41,23 +41,25 @@ def clean_location_text(text: str) -> str:
     """
     Clean location before using fuzzy string match
     """
-    text = text.replace("หมู่บ้าน", " ")
-    text = text.replace("ซอย", " ")
+    # text = text.replace("หมู่บ้าน", " ")
+    # text = text.replace("ซอย", " ")
     text = text.replace("แขวง", " ")
     text = text.replace("เขต", " ")
+    text = text.replace("จังหวัด", " ")
     text = text.replace("อำเภอ", " ")
     text = text.replace("ตำบล", " ")
-    text = text.replace("ถ.", " ")
-    text = text.replace("ซ.", " ")
+    # text = text.replace("ถ.", " ")
+    # text = text.replace("ซ.", " ")
     text = text.replace("ตฺ", "ต.")
     text = text.replace("ต.", " ")
     text = text.replace("อ.", " ")
     text = text.replace("จ.", " ")
     text = text.replace("คอหงส์", "คอหงษ์")
-    text = text.replace("กทม.", "กรุงเทพ")
-    text = text.replace("กทม", "กรุงเทพ")
-    text = text.replace("กรุงเทพมหานคร", "กรุงเทพ")
-    text = text.replace(".", "")
+    text = text.replace("กทม.", "กรุงเทพมหานคร")
+    text = text.replace("กทม", "กรุงเทพมหานคร")
+    text = text.replace("กรุงเทพฯ", "กรุงเทพมหานคร")
+    text = text.replace("กรุงเทพมหานคร", "กรุงเทพมหานคร")
+    # text = text.replace(".", "")
     return text
 
 
