@@ -1,4 +1,3 @@
-from thaiAddressTag.hashmaps import hashmap
 from thaiAddressTag.addresses import address_list
 from thaiAddressTag.utils import *
 
