@@ -2,3 +2,5 @@ pythainlp==5.0.3
 python-crfsuite==0.9.10
 fastapi
 uvicorn
+simpletransformers
+torch
