@@ -35,7 +35,7 @@ class Text(BaseModel):
     text: str
 
 
-@addr_router.get("/addr-detect")
+@addr_router.get("/")
 def read_root() -> Union[str, int]:
     try:
         return "Welcome to address-check API\nUse path /address-check to check address\nUse path /docs to see API documentation\nUse path /redoc to see API documentation\n"
@@ -53,7 +53,7 @@ def read_root() -> Union[str, int]:
 #     return {"item_name": item.name, "item_id": item_id}
 
 
-@addr_router.post("/addr-detect/address-check")
+@addr_router.post("/address-check")
 def address_check(text: Text) -> dict:
     try:
         text = text.text
