@@ -28,7 +28,12 @@ def match_location(location, zipcode):
                     s = word
                     # print(s)
                     # break
-        return ADDR_DF[(ADDR_DF['subdistrict'] == s) & (ADDR_DF['zipcode'] == z)].to_dict('records')[0]
+        results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
+            ADDR_DF['zipcode'] == z)].to_dict('records')
+        if results:
+            return results[0]
+        else:
+            return None  # not found result
     # find by province
     for word in location:
         if word in PROVINCES:
@@ -44,7 +49,12 @@ def match_location(location, zipcode):
                 s = word
                 # print(s)
                 # break
-        return ADDR_DF[(ADDR_DF['subdistrict'] == s) & (ADDR_DF['province'] == p)].to_dict('records')[0]
+        results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
+            ADDR_DF['province'] == p)].to_dict('records')[0]
+        if results:
+            return results[0]
+        else:
+            return None  # not found result
 
 
 def extract_address(text, model):
