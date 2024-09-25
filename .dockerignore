@@ -1,4 +1,5 @@
 .vscode
 __pycache__
 thaiAddressTag/__pycache__
+thaiAddressTag/models
 venv

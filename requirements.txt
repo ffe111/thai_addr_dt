@@ -1,6 +1,6 @@
 pythainlp==5.0.3
-python-crfsuite==0.9.10
+# python-crfsuite==0.9.10
 fastapi
 uvicorn
-simpletransformers
-torch
+# torch==2.4.1+cpu
+simpletransformers==0.70.1
