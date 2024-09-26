@@ -4,7 +4,7 @@ from fastapi import APIRouter, FastAPI
 from pydantic import BaseModel
 
 from simpletransformers.ner import NERModel
-import torch
+# import torch
 
 from thaiAddressTag.tag import *
 
@@ -12,9 +12,9 @@ from thaiAddressTag.tag import *
 import logging
 
 # Import NER Model
-PATH = "thaiAddressTag/models"
+PATH = "F311/addrthner"
 MODEL = NERModel("camembert", model_name=PATH,
-                 use_cuda=torch.cuda.is_available())
+                 use_cuda=False)
 
 app = FastAPI()
 
