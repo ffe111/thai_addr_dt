@@ -14,7 +14,9 @@ import logging
 # Import NER Model
 PATH = "F311/addrthner"
 MODEL = NERModel("camembert", model_name=PATH,
-                 use_cuda=False)
+                 use_cuda=False,
+                 labels=["O", "B-ORG", "B-NAME", "I-NAME", "B-PROV", "B-DIS", "B-SUB", "B-ZIP", "B-PHONE", "B-EMAIL"]
+                 )
 
 app = FastAPI()
 
