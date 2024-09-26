@@ -9,9 +9,21 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
-# RUN pip install torch==2.4.1 -f https://download.pytorch.org/whl/cpu
 
 RUN pip install -r requirements.txt
+
+# torch==2.0.1 image size has 3GB++
+RUN pip install torch==2.0.1+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+# fix torch==2.0.1+cpu error numpy version 
+RUN pip install --upgrade pip && pip install "numpy<2"
+
+# torch==2.4.1 image size has 10GB++
+# RUN pip install torch==2.4.1 -f https://download.pytorch.org/whl/cpu
+
+# torch==2.4.1+cpu image size has 6GB++
+# RUN pip3 --no-cache-dir install torch \
+#         --index-url https://download.pytorch.org/whl/cu118
 
 COPY . .
 
