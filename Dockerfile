@@ -41,30 +41,18 @@
 
 FROM python:3.11-slim
 
-# Combine RUN commands to reduce layers
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget unzip && \
-    pip install --no-cache-dir gdown && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 EXPOSE 8080
 ENV PORT 8080
 
 WORKDIR /app
 
-COPY requirements.txt .
-
-# Install dependencies separately for debugging
-RUN echo "Installing requirements.txt" && \
-    pip install --no-cache-dir -r requirements.txt
-
-RUN echo "Installing torch" && \
-    pip install --no-cache-dir torch==2.0.1 -f https://download.pytorch.org/whl/torch_stable.html
-
-RUN echo "Installing numpy" && \
-    pip install --no-cache-dir "numpy<2"
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "main.py"]
+# RUN pip install .
+
+WORKDIR /app
+
+CMD python main.py

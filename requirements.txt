@@ -1,6 +1,23 @@
-pythainlp==5.0.3
-# python-crfsuite==0.9.10
-fastapi
-uvicorn
-# torch==2.4.1+cpu
+# Web framework
+fastapi==0.103.2
+uvicorn==0.23.2
+
+# Data processing and analysis
+numpy==1.26.0
+
+# Machine learning
+torch==2.0.1
+ 
+# NLP tools
+transformers==4.34.0
 simpletransformers==0.70.1
+pythainlp==4.0.2
+
+# Utility
+python-multipart==0.0.6
+python-dotenv==1.0.0
+
+# Development tools
+pytest==7.4.2
+black==23.9.1
+flake8==6.1.0
