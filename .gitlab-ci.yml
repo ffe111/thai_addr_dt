@@ -7,4 +7,4 @@ variables:
 include:
   - project: 'nokchen-myorder/dev-portal/ci-template'
     ref: 'master'
-    file: 'fastapi-template.yml'
+    file: 'fastapi-ml-template.yml'
