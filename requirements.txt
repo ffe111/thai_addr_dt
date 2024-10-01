@@ -6,10 +6,11 @@ uvicorn==0.23.2
 numpy==1.26.0
 
 # Machine learning
-torch==2.0.1
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==2.0.1+cpu
  
 # NLP tools
-transformers==4.34.0
+# transformers==4.34.0
 simpletransformers==0.70.1
 pythainlp==4.0.2
 
