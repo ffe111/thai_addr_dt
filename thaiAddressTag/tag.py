@@ -81,6 +81,7 @@ def extract_address(text, model):
 
     location = subdistrict + district + province
     location = match_location(location, zipcode)
+    location = {'province': province, 'district': district, 'subdistrict': subdistrict, 'zipcode': '1'} if location == None else location
     location.update({'name': name})
     location.update({'phone': phone_number})
     print(location)
