@@ -3,6 +3,7 @@ import pandas as pd
 # Read data from csv file
 ADDR_DF = pd.read_csv(
     "thaiAddressTag/data/parsed_addresses.csv", dtype={"zipcode": str})
+#    "data/parsed_addresses.csv", dtype={"zipcode": str})
 
 # Create hashmap store provinces, districts, subdistricts
 PROVINCES = ADDR_DF['province'].unique().tolist()
