@@ -37,6 +37,11 @@ def match_location(location, zipcode=None):
             return None  # not found result
     # find by province
     for word in location:
+        if word == 'กรุงเทพมหานคร':
+            location.remove(word)
+            p = 'กรุงเทพ'
+            print(p)
+            break
         if word in PROVINCES:
             p = word
             # drop p in location list
