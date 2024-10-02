@@ -40,7 +40,7 @@ def match_location(location, zipcode=None):
         if word == 'กรุงเทพมหานคร':
             location.remove(word)
             p = 'กรุงเทพ'
-            print(p)
+            # print(p)
             break
         if word in PROVINCES:
             p = word
