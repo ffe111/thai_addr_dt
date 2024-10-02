@@ -30,6 +30,7 @@ def preprocess(text: str) -> str:
     text = text.replace("(", "")
     text = text.replace(")", "")
     text = text.replace('"', "")
+    text = text.replace(',', "")
 
     # text = remove_emoji(text)
     text = " ".join([t for t in text.strip().split(" ") if t.strip() != ""])
