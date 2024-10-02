@@ -1,8 +1,8 @@
 # from simpletransformers.ner import NERModel
 # import torch
-from thaiAddressTag.addresses import *
-from thaiAddressTag.ner import *
-from thaiAddressTag.utils import *
+from addresses import *
+from ner import *
+from utils import *
 
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -82,6 +82,16 @@ def extract_address(text, model):
 
     return location
 
+
+# ---- Test:function ----
+name, phone_number = '', ''                            
+province, district, subdistrict, zipcode = ['กรุงเทพมหานคร'], ['ฉิมพลี'], ['ตลิ่งชัน'], ''
+location = subdistrict + district + province
+location = match_location(location, zipcode)
+location = {'province': province, 'district': district, 'subdistrict': subdistrict, 'zipcode': '1'} if location == None else location
+location.update({'name': name})
+location.update({'phone': phone_number})
+print(location)
 
 # text = "อนงค์ลักษณ์\n9/56 ม.3\nหมู่บ้านนฤมลศิริ(ซอย2)\nซ.บุญศิริ ถ.สุขุมวิท\nต.บางเมือง\nอ.เมืองสมุทรปราการ\nจ.สมุทรปราการ\n10270\nโทร.0956029655"
 # path = "models"
