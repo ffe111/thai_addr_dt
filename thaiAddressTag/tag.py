@@ -7,6 +7,12 @@ from thaiAddressTag.utils import *
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
+def check_result(results):
+    """ check result from query by dataframe """
+    if results:
+        return results[0]
+    else:
+        return None  # not found result
 
 def match_location(location, zipcode=None):
     """
@@ -28,13 +34,9 @@ def match_location(location, zipcode=None):
                     s = word
                     # print(s)
                     # break
-        results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
-            ADDR_DF['zipcode'] == z)].to_dict('records')
-        # print(results)
-        if results:
-            return results[0]
-        else:
-            return None  # not found result
+        return check_result(results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
+            ADDR_DF['zipcode'] == z)].to_dict('records'))
+
     # find by province
     for word in location:
         if word == 'กรุงเทพมหานคร':
@@ -55,13 +57,8 @@ def match_location(location, zipcode=None):
                 s = word
                 # print(s)
                 # break
-        results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
-            ADDR_DF['province'] == p)].to_dict('records')[0]
-        # print(results)
-        if results:
-            return results
-        else:
-            return None  # not found result
+        return check_result(results = ADDR_DF[(ADDR_DF['subdistrict'] == s) & (
+            ADDR_DF['province'] == p)].to_dict('records'))
 
 
 def extract_address(text, model):
