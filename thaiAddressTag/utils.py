@@ -24,15 +24,23 @@ def preprocess(text: str) -> str:
     text = text.replace("ติดต่อ", " ")
     text = text.replace("\n-", " ")
     text = text.replace("\n", " ")
-    text = text.replace(": ", " ")
-    text = text.replace(":", "")
-    text = text.replace("-", "")
-    text = text.replace("(", "")
-    text = text.replace(")", "")
-    text = text.replace('"', "")
-    text = text.replace(',', "")
+    # text = text.replace(": ", " ")
+    # text = text.replace(":", "")
+    # text = text.replace("-", "")
+    # text = text.replace("(", "")
+    # text = text.replace(")", "")
+    # text = text.replace('"', "")
+    # text = text.replace(',', "")
 
     # text = remove_emoji(text)
+    # เติมช่องว่างเฉพาะกรณีตัวเลขติดกับตัวอักษร
+    text = re.sub(r'(?<=\D)(\d+)|(\d+)(?=\D)', r' \1\2 ', text)
+    # ลบช่องว่างซ้ำที่เกิดขึ้น
+    text = re.sub(r'\s+', ' ', text).strip()
+    # ลบอักษรที่ไม่ต้องการ
+    text = re.sub(r'[!"#$%&\'()*+,/:;<=>?@[\\\]^`{|}~]', ' ', text)
+    # ว้นตัวเลขที่ติดกับอะกษรไทย
+    text = re.sub(r'([ก-๙])([0-9]+)|([0-9]+)([ก-๙])', r'\1\3 \2\4', text)
     text = " ".join([t for t in text.strip().split(" ") if t.strip() != ""])
     print(text)
     return text
@@ -73,8 +81,6 @@ def extract_phone_(text: str) -> (str, list):
     3. Remove the phone number from the text.
     Returns the cleaned text and a list of extracted phone numbers.
     """
-    # Remove parentheses around phone numbers
-    text = text.replace('(', '').replace(')', '').replace('-', ' ')
 
     # Replace country code like +XX with 0
     text = re.sub(r'\+\d{2}', '0', text)
@@ -86,11 +92,13 @@ def extract_phone_(text: str) -> (str, list):
     def clean_phone(match):
         phone_number = match.group(0)
         # Remove dash (-) and spaces within the phone number
-        phone_number = re.sub(r'[\s-]', '', phone_number)
+        phone_number = re.sub(r'[\s._-]', '', phone_number)
         phone_numbers.append(phone_number)
         return ''  # Remove the phone number from the text
 
-    # Improved regex to capture different phone number formats
-    cleaned_text = re.sub(r'\b(0[\d\s-]{7,12})\b', clean_phone, text)
+    # Adjusted regex to capture phone numbers in various formats and contexts
+    # cleaned_text = re.sub(r'(?<!\d)(0\d{2}[\d\s-]{7,9}\d)(?!\d)', clean_phone, text)
+    cleaned_text = re.sub(
+        r'(?<!\d)(0\d{8,9})(?!\d)|(?<!\d)(0\d{1,2}[\d\s._-]{7,10}\d)(?!\d)', clean_phone, text)
 
     return cleaned_text, phone_numbers
