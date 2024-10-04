@@ -107,7 +107,7 @@ def ner_extract(predict):
     if current_province:
         province.append(current_province)
     if current_zipcode:
-        zipcode.append(current_zipcode)
+        zipcode.append(current_zipcode) if len(current_zipcode) == 5 else None
     if current_phone:
         phone.append(current_phone)
 
