@@ -80,7 +80,7 @@ def ner_extract(predict):
             elif value == 'B-ZIP' or value == 'I-ZIP':
                 if value == 'B-ZIP':
                     if current_zipcode:
-                        zipcode.append(current_zipcode)
+                        zipcode.append(current_zipcode) if len(current_zipcode) == 5 else None
                     current_zipcode = key
                 elif value == 'I-ZIP':
                     if current_zipcode:
