@@ -11,12 +11,16 @@ DISTRICTS = ADDR_DF.district.unique().tolist()
 SUBDISTRICTS = ADDR_DF.subdistrict.unique().tolist()
 
 # Create list of district, subdistrict for each province
-DISTRICTS_DICT = ADDR_DF.groupby("province")["district"].apply(list)
-SUBDISTRICTS_DICT = ADDR_DF.groupby("province")["subdistrict"].apply(list)
+DISTRICTS_DICT = ADDR_DF.groupby(
+    "province")["district"].apply(lambda x: list(set(x)))
+SUBDISTRICTS_DICT = ADDR_DF.groupby(
+    "province")["subdistrict"].apply(lambda x: list(set(x)))
 
 # Create list of district, subdistrict for each zipcode
-DISTRICTS_ZIP_DICT = ADDR_DF.groupby("zipcode")["district"].apply(list)
-SUBDISTRICTS_ZIP_DICT = ADDR_DF.groupby("zipcode")["subdistrict"].apply(list)
+DISTRICTS_ZIP_DICT = ADDR_DF.groupby(
+    "zipcode")["district"].apply(lambda x: list(set(x)))
+SUBDISTRICTS_ZIP_DICT = ADDR_DF.groupby(
+    "zipcode")["subdistrict"].apply(lambda x: list(set(x)))
 
 # print(PROVINCES)
 # print(set(DISTRICTS_DICT.get("ชลบุรี", DISTRICTS)))
