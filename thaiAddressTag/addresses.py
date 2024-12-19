@@ -9,6 +9,7 @@ ADDR_DF = pd.read_csv(
 PROVINCES = ADDR_DF['province'].unique().tolist()
 DISTRICTS = ADDR_DF.district.unique().tolist()
 SUBDISTRICTS = ADDR_DF.subdistrict.unique().tolist()
+ZIPCODES = ADDR_DF.zipcode.unique().tolist()
 
 # Create list of district, subdistrict for each province
 DISTRICTS_DICT = ADDR_DF.groupby(
