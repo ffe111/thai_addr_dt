@@ -24,6 +24,7 @@ def preprocess(text: str) -> str:
     text = text.replace("ติดต่อ", " ")
     text = text.replace("\n-", " ")
     text = text.replace("\n", " ")
+    # text = text.replace(".", " ")
     # text = text.replace(": ", " ")
     # text = text.replace(":", "")
     # text = text.replace("-", "")
@@ -33,6 +34,8 @@ def preprocess(text: str) -> str:
     # text = text.replace(',', "")
 
     # text = remove_emoji(text)
+    # ลบ ต อ จ ม
+    # text = re.sub(r'\b[ตอจม]\b', ' ', text)
     # เติมช่องว่างเฉพาะกรณีตัวเลขติดกับตัวอักษร
     text = re.sub(r'(?<=\D)(\d+)|(\d+)(?=\D)', r' \1\2 ', text)
     # ลบช่องว่างซ้ำที่เกิดขึ้น
