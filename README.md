@@ -1,97 +1,30 @@
-# Thai Address Tagging API 🇹🇭
+# Thai Address Tagging API
 
-A robust REST API for detecting and extracting structured Thai address information from unstructured text. This project uses Natural Language Processing (NLP) to identify names, phone numbers, and geographical entities like provinces, districts, and zip codes.
+English | [ภาษาไทย](README.th.md)
 
-## 🚀 Features
+Extract Thai address entities with transformer-based named entity recognition (NER), then use reference data to match provinces, districts, subdistricts, and postal codes. The FastAPI service also attempts to extract names, organizations, and phone numbers when present.
 
-- **Entity Extraction**: Automatically extracts Name, Phone, Province, District (Amphoe), Sub-district (Tambon), and Zipcode.
-- **NLP Powered**: Built with `simpletransformers` and `pythainlp` for high accuracy.
-- **Fast & Reliable**: Powered by FastAPI with asynchronous support.
-- **Containerized**: Fully Dockerized for easy deployment.
-- **Interactive API Docs**: Built-in Swagger UI and Redoc.
+## Quick start
 
-## 🛠 Tech Stack
+From the repository root, build and run the container:
 
-- **Framework**: FastAPI (Python 3.9+)
-- **NLP Libraries**: SimpleTransformers (BERT-based), PyThaiNLP
-- **Server**: Uvicorn
-- **Container**: Docker & Docker Compose
-
-## 📋 API Specification
-
-### Check Address
-**Endpoint**: `POST /address-check`
-
-**Request Body**:
-```json
-{
-  "text": "อนงค์ลักษณ์\n9/56 ม.3\nหมู่บ้านนฤมลศิริ(ซอย2)\nซ.บุญศิริ ถ.สุขุมวิท\nต.บางเมือง\nอ.เมืองสมุทรปราการ\nจ.สมุทรปนาการ\n10270\nโทร.0956029655"
-}
-```
-
-**Response Body**:
-```json
-{
-  "address": {
-    "province": "สมุทรปราการ",
-    "amphoe": "เมืองสมุทรปราการ",
-    "district": "บางเมือง",
-    "zipcode": "10270",
-    "name": "อนงค์ลักษณ์",
-    "phone": "0956029655"
-  }
-}
-```
-
-## ⚙️ Installation
-
-### Prerequisites
-- Python 3.9 or higher
-- `pip` (Python package manager)
-
-### Local Setup
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repository-url>
-   cd thai-address-tag
-   ```
-
-2. **Create a virtual environment**:
-   ```bash
-   python -m venv venv
-   ```
-
-3. **Activate the environment**:
-   - **Windows**: `venv\Scripts\activate`
-   - **Mac/Linux**: `source venv/bin/activate`
-
-4. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-5. **Run the application**:
-   ```bash
-   python main.py
-   ```
-
-## 🐳 Docker Deployment
-
-### Using Docker
 ```bash
-docker build -t address-api:v1 .
-docker run -p 8000:8000 --name address-service address-api:v1
+docker build -t thai-address-tagging .
+docker run --rm -p 127.0.0.1:8080:8080 thai-address-tagging
 ```
 
-### Using Docker Compose
-```bash
-docker compose up -d
+For local development, use Python 3.11 (the version in the [Dockerfile](Dockerfile)), install [`requirements.txt`](requirements.txt) in a virtual environment, and run `python main.py`. The service loads the [`F311/addrthner`](https://huggingface.co/F311/addrthner) model on CPU at startup, so first startup needs network access if the model is not cached. The checked-in Compose file maps port 8000; the application listens on **8080**, so use the Docker command above unless you adjust the mapping.
+
+## Try the API
+
+Open [Swagger UI](http://localhost:8080/docs) and run `POST /addr-detect/address-check` with this synthetic request:
+
+```json
+{"text":"ต.สุเทพ อ.เมืองเชียงใหม่ จ.เชียงใหม่ 50200"}
 ```
 
-## 📖 Usage Guide
-1. Once the server is running, navigate to `http://127.0.0.1:8000/docs` in your browser.
-2. You will find the **Swagger UI** where you can test the `/address-check` endpoint interactively.
-3. Click **"Try it out"**, enter your address text, and click **"Execute"**.
+The response contains the original `text` and an `address` object. Extracted fields may be incomplete when the model or reference data cannot resolve the input. The prototype can print extracted entities to stdout; keep real personal data out of demos, shared logs, and issue reports.
 
----
-Developed by **ffe111**
+Start with [the API route](main.py), [the extraction and matching pipeline](thaiAddressTag/tag.py), or compare the [dictionary-based API](https://github.com/ffe111/address_detection_api).
+
+<!-- Maintainers: Update the English README first, then mirror the change in README.th.md. -->
